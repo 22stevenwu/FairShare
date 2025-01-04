@@ -1,0 +1,46 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+nav {
+    background-color: #263238;
+    color: white;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-title h1 {
+    margin: 0;
+    margin-left: 20px;
+    color: #FFD700; 
+    text-decoration: none;
+}
+.nav-links {
+    display: flex;
+    gap: 100px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.nav-links li {
+    display: inline;
+}
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 30px;
+}
+.nav-title, .nav-links {
+    flex: 1;
+}
+.nav-links {
+    justify-content: flex-end;
+    margin-right: 25px;
+}
