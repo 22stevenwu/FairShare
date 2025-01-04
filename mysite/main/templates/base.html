@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}">
+
+    <title>{% block title %}FairShare{% endblock %}</title>
+
+    {% load static %}
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-title">
+                <em><h1>FairShare</a></h1></em>
+            </div>
+
+            <div class="nav-links">
+                <ul>
+                    {% if request.user.is_authenticated %}
+                    <em><li><a href="{% url 'profile' %}">Profile</a></li></em>
+                    <em><li><a href="{% url 'profile' %}">Bills</a></li></em>
+                {% else %}
+                <em><li><a href="{% url 'social:begin' 'google-oauth2' %}">Sign In with Google</a></li></em>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
