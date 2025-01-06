@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<body>
+    <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
+    <h1>Past Bills</h1>
+    <ul>
+        {% for bill in bills %}
+        <li>{{ bill.name }} - {{ bill.total_amount }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+</body>
+{% endblock %}

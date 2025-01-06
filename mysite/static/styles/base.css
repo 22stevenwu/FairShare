@@ -1,46 +1,97 @@
+/* base.css */
+
 body {
     font-family: 'Inter', sans-serif;
-    margin: 0px;
-    padding: 0px;
-}
-nav {
-    background-color: #263238;
-    color: white;
-    padding: 10px;
     margin: 0;
-    width: 100%;
+    padding: 0;
+    background-color: #fafafa; /* Light background for the body */
 }
+
+nav {
+    background-color: #ffffff; /* White background for a clean look */
+    color: #333333; /* Dark text color */
+    padding: 15px 30px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; /* Centers the navbar */
 }
+
 .nav-title h1 {
     margin: 0;
-    margin-left: 20px;
-    color: #FFD700; 
+    font-size: 2rem;
+    color: #4caf50; /* Money green color */
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and scale */
 }
-.nav-links {
+
+.nav-title h1:hover {
+    color: #FFD700; /* Change color to gold */
+    transform: scale(1.1); /* Slightly enlarge the text */
+}
+
+.nav-links ul {
     display: flex;
-    gap: 100px;
+    gap: 25px;
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
+
 .nav-links li {
-    display: inline;
+    display: inline-block;
 }
+
 .nav-links li a {
-    color: white;
+    color: #333333; /* Dark color for the links */
     text-decoration: none;
-    font-weight: bold;
-    margin: 30px;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
-.nav-title, .nav-links {
-    flex: 1;
+
+.nav-links li a:hover {
+    background-color: #4caf50; /* Money green on hover */
+    color: #ffffff; /* White text on hover */
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); /* Light shadow for hover effect */
 }
-.nav-links {
-    justify-content: flex-end;
-    margin-right: 25px;
+
+.nav-links li a:active {
+    background-color: #388e3c; /* Darker green on click */
+}
+
+/* Responsive design for mobile view */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-links li a {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+    }
+
+    .nav-title h1 {
+        font-size: 1.8rem;
+    }
+}
+
+.content {
+    padding: 20px;
+    margin-top: 20px;
 }

@@ -28,7 +28,7 @@
                 <ul>
                     {% if request.user.is_authenticated %}
                     <em><li><a href="{% url 'profile' %}">Profile</a></li></em>
-                    <em><li><a href="{% url 'profile' %}">Bills</a></li></em>
+                    <em><li><a href="{% url 'bills' %}">Bills</a></li></em>
                 {% else %}
                 <em><li><a href="{% url 'social:begin' 'google-oauth2' %}">Sign In with Google</a></li></em>
                 {% endif %}
@@ -39,6 +39,7 @@
 
     <div class="content">
         {% block content %}
+
         {% endblock %}
     </div>
 </body>
