@@ -12,16 +12,18 @@ class Profile(models.Model):
         return f"{self.user.username}'s profile"
 
 class Bill(models.Model):
-    name = models.CharField(max_length=255)  # Name of the bill (e.g., "Dinner at XYZ")
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)  # Total amount of the bill
+    name = models.CharField(max_length=255)  
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)  
     tip_percentage = models.PositiveIntegerField(default=0)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)  # User who created the bill
+    tax_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)  
     created_at = models.DateTimeField(auto_now_add=True)
 
 class BillSplit(models.Model):
     bill = models.ForeignKey(Bill, related_name="splits", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name="bill_splits", on_delete=models.CASCADE)
-    amount_owed = models.DecimalField(max_digits=10, decimal_places=2)  # Amount the user owes for the bill
+    participant_name = models.CharField(max_length=255) 
+    amount_spent = models.DecimalField(max_digits=10, decimal_places=2)  
+    amount_owed = models.DecimalField(max_digits=10, decimal_places=2)  
 
     def __str__(self):
-        return f"{self.user.username} owes ${self.amount_owed} for {self.bill.name}"
+        return f"{self.participant_name} owes ${self.amount_owed} for {self.bill.name}"

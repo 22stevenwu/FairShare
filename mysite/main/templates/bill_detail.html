@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Bill Details</h1>
+    <h2>Bill Name: {{ bill.name }}</h2>
+    <p>Total Amount: ${{ bill.total_amount }}</p>
+    <p>Tip: ${{ bill.tip_percentage }}%</p>
+    <p>Tax: ${{ bill.tax_amount }}</p>
+    <p>Total Bill (with Tip and Tax): ${{ total_bill_with_tax_and_tip }}</p>
+    
+    <h3>Participants:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Participant Name</th>
+                <th>Amount Spent</th>
+                <th>Amount Owed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for split in bill_splits %}
+                <tr>
+                    <td>{{ split.participant_name }}</td>
+                    <td>${{ split.amount_spent }}</td>
+                    <td>${{ split.amount_owed }}</td>  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'bills' %}">Back to Bills</a>
+{% endblock %}
