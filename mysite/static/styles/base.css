@@ -4,15 +4,15 @@ body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fafafa; /* Light background for the body */
+    background-color: #fafafa; 
 }
 
 nav {
-    background-color: #ffffff; /* White background for a clean look */
-    color: #333333; /* Dark text color */
+    background-color: #ffffff; 
+    color: #333333; 
     padding: 15px 30px;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .nav-container {
@@ -20,21 +20,21 @@ nav {
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
-    margin: 0 auto; /* Centers the navbar */
+    margin: 0 auto; 
 }
 
 .nav-title h1 {
     margin: 0;
     font-size: 2rem;
-    color: #4caf50; /* Money green color */
+    color: #4caf50; 
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and scale */
+    transition: color 0.3s ease, transform 0.3s ease; 
 }
 
 .nav-title h1:hover {
-    color: #FFD700; /* Change color to gold */
-    transform: scale(1.1); /* Slightly enlarge the text */
+    color: #FFD700; 
+    transform: scale(1.1); 
 }
 
 .nav-links ul {
@@ -50,9 +50,9 @@ nav {
 }
 
 .nav-links li a {
-    color: #333333; /* Dark color for the links */
+    color: #333333; 
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 1rem;
     padding: 8px 15px;
     border-radius: 5px;
@@ -60,13 +60,13 @@ nav {
 }
 
 .nav-links li a:hover {
-    background-color: #4caf50; /* Money green on hover */
-    color: #ffffff; /* White text on hover */
-    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); /* Light shadow for hover effect */
+    background-color: #4caf50; 
+    color: #ffffff; 
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); 
 }
 
 .nav-links li a:active {
-    background-color: #388e3c; /* Darker green on click */
+    background-color: #388e3c;
 }
 
 /* Responsive design for mobile view */
