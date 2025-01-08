@@ -1,36 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-    <h1>Create a New Bill</h1>
+<head>
+    <link rel="stylesheet" href="{% static 'styles/bill_create.css' %}">
+</head>
+    <a href="{% url 'bills' %}" class="back-to-bills-link">Back to Bills</a>
 
-    <form method="POST">
+    <h1 class="page-title">Create a New Bill</h1>
+
+    <form method="POST" class="create-bill-form">
         {% csrf_token %}
-        {{ bill_form.as_p }}
+        <div class="bill-form-fields">
+            {{ bill_form.as_p }}
+        </div>
 
-        <label for="num_users">Number of participants:</label>
-        <input type="number" id="num_users" name="num_users" min="1" max="10" required>
+        <label for="num_users" class="num-users-label">Number of participants:</label>
+        <input type="number" id="num_users" name="num_users" min="1" max="10" required class="num-users-input">
 
-        <div id="user_inputs"></div>
+        <div id="user_inputs" class="user-inputs"></div>
 
-        <button type="submit">Create Bill</button>
+        <button type="submit" class="submit-button">Create Bill</button>
     </form>
-
-    <a href="{% url 'bills' %}">Back to Bills</a>
     
+    <div id="user_inputs"></div>
+
     <script>
         document.getElementById('num_users').addEventListener('input', function() {
             var numUsers = parseInt(this.value);
             var userInputsDiv = document.getElementById('user_inputs');
             userInputsDiv.innerHTML = '';  
-
+    
             for (var i = 0; i < numUsers; i++) {
                 var userDiv = document.createElement('div');
                 userDiv.classList.add('user-entry');
                 
                 userDiv.innerHTML = `
-                    <label for="name_${i}">Participant ${i + 1} Name:</label>
-                    <input type="text" name="name_${i}" id="name_${i}" required>
-                    <label for="amount_spent_${i}">Amount Spent:</label>
-                    <input type="number" name="amount_spent_${i}" id="amount_spent_${i}" min="0" step="0.01" required>
+                    <div class="participant-name">
+                        <label for="name_${i}">Participant ${i + 1} Name:</label>
+                        <input type="text" name="name_${i}" id="name_${i}" required>
+                    </div>
+                    <div class="amount-spent">
+                        <label for="amount_spent_${i}">Amount Spent:</label>
+                        <input type="number" name="amount_spent_${i}" id="amount_spent_${i}" min="0" step="0.01" required>
+                    </div>
                 `;
                 
                 userInputsDiv.appendChild(userDiv);
