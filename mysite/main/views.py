@@ -59,7 +59,7 @@ def bill_create(request):
                     amount_owed=participant_share  
                 )
 
-            return redirect('bills') 
+            return redirect('bill_detail', bill_id=bill.id)
 
     else:
         bill_form = BillForm()
