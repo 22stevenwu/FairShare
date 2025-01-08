@@ -14,11 +14,8 @@ def logout_view(request):
 
 @login_required
 def bills_view(request):
-    bills = Bill.objects.filter(created_by=request.user) 
-
-    return render(request, "bills.html", {
-        'bills': bills  
-    })
+    bills = Bill.objects.filter(created_by=request.user)
+    return render(request, "bills.html", {'bills': bills})
 
 @login_required
 def bill_create(request):
@@ -52,7 +49,7 @@ def bill_create(request):
             # Calculate how much each participant owes based on their share
             for participant_name, amount_spent in participants:
                 # Calculate each person's share of the total bill
-                participant_share = (amount_spent / total_spent) * total_bill_with_tax_and_tip
+                participant_share = (amount_spent / total_bill) * total_bill_with_tax_and_tip
 
                 # Create an entry for each participant
                 BillSplit.objects.create(

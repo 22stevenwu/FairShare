@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'styles/bills.css' %}">
+</head>
+
 <body>
-    <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
-    <h1>Past Bills</h1>
-    <ul>
-        {% for bill in bills %}
-            <li>
-                <a href="{% url 'bill_detail' bill.id %}">{{ bill.name }}</a> - ${{ bill.total_amount }}
-            </li>
-        {% empty %}
-            <li>No bills found.</li>  
-        {% endfor %}
-    </ul>
+    <div class="bills-page-wrapper">
+        <div class="bills-header">
+            <h1 class="page-title">Past Bills</h1>
+            <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
+        </div>
+
+        <div class="bills-list-container">
+            <ul class="bills-list">
+                {% for bill in bills %}
+                    <li class="bill-item">
+                        <a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a> ${{ bill.total_amount }}
+                    </li>
+                {% empty %}
+                    <li class="no-bills">No bills found.</li> 
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </body>
 {% endblock %}
