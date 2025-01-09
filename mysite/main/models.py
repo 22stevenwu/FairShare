@@ -7,10 +7,7 @@ class Profile(models.Model):
     amount_owed = models.PositiveIntegerField(default=0)
     amount_due = models.PositiveIntegerField(default=0)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.user.username}'s profile"
-
+    
 class Bill(models.Model):
     name = models.CharField(max_length=255)  
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)  
@@ -23,7 +20,5 @@ class BillSplit(models.Model):
     bill = models.ForeignKey(Bill, related_name="splits", on_delete=models.CASCADE)
     participant_name = models.CharField(max_length=255) 
     amount_spent = models.DecimalField(max_digits=10, decimal_places=2)  
-    amount_owed = models.DecimalField(max_digits=10, decimal_places=2)  
-
-    def __str__(self):
-        return f"{self.participant_name} owes ${self.amount_owed} for {self.bill.name}"
+    amount_owed = models.DecimalField(max_digits=10, decimal_places=2)
+    paid = models.BooleanField(default=False) 
