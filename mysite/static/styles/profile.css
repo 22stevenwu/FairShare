@@ -1,0 +1,60 @@
+/* Profile Page Styles */
+.profile-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+    font-size: 32px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-info {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.profile-info p {
+    margin: 10px 0;
+}
+
+.profile-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.logout-button,
+.login-button {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover,
+.login-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.logout-button {
+    background-color: #f44336;
+    margin-right: 20px;
+}
+
+.logout-button:hover {
+    background-color: #e53935;
+}
