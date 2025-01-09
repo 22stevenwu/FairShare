@@ -1,12 +1,33 @@
 from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
-from .forms import BillForm, BillSplitForm
-from .models import Bill, BillSplit, User
+from django.db.models import Sum
+from .forms import BillForm
+from .models import Bill, BillSplit
 from django.contrib.auth.decorators import login_required
 
+def login_view(request):
+    return render(request, "login.html")
+
+@login_required
 def profile(request):
-  return render(request, "profile.html")
+    user = request.user  # Get the logged-in user
+    # Get the number of bills created by the user
+    num_bills = Bill.objects.filter(created_by=user).count()
+
+    # Get the total amount owed by the user
+    total_owed = BillSplit.objects.filter(bill__created_by=user, paid=False).aggregate(Sum('amount_owed'))['amount_owed__sum']
+
+    # Default to 0 if no amount is owed (in case the sum is None)
+    total_owed = total_owed if total_owed is not None else 0
+
+    context = {
+        'user': user,
+        'num_bills': num_bills,
+        'total_owed': round(total_owed, 2),
+    }
+
+    return render(request, "profile.html", context)
 
 def logout_view(request):
   logout(request)
@@ -14,7 +35,10 @@ def logout_view(request):
 
 @login_required
 def bills_view(request):
-    bills = Bill.objects.filter(created_by=request.user)
+    user = request.user  # Get the logged-in user
+
+    # Fetch all bills created by the user
+    bills = Bill.objects.filter(created_by=user)
 
     # Calculate the total amount with tax and tip for each bill
     for bill in bills:
@@ -25,21 +49,45 @@ def bills_view(request):
 
         bill_splits = BillSplit.objects.filter(bill=bill)
 
-        total_owed = Decimal('0.00')  
+        total_owed = Decimal('0.00')
         for split in bill_splits:
             if split.paid:
-                split.amount_owed = Decimal('0.00')  
+                split.amount_owed = Decimal('0.00')
             else:
                 amount_owed = (split.amount_spent / total_bill) * total_bill_with_tax_and_tip
-                split.amount_owed = round(Decimal(amount_owed), 2)  
+                split.amount_owed = round(Decimal(amount_owed), 2)
             split.save()
-            total_owed += split.amount_owed 
+            total_owed += split.amount_owed
 
+        # If total_owed is 0, mark the bill as past (is_current = False)
+        if total_owed == 0:
+            bill.is_current = False  # Set the bill to past
+        else:
+            bill.is_current = True  # Otherwise, it is still current
+
+        # Save the calculated total_owed to the bill instance in the database
         bill.total_with_tax_and_tip = total_bill_with_tax_and_tip
-        bill.total_owed = total_owed
+        bill.total_owed = total_owed  # Save the total_owed
         bill.save()
 
-    return render(request, "bills.html", {'bills': bills})
+    # Fetch current bills (where is_current is True)
+    current_bills = Bill.objects.filter(created_by=request.user, is_current=True)
+
+    # Fetch past bills (where is_current is False)
+    past_bills = Bill.objects.filter(created_by=request.user, is_current=False)
+
+    # Limit the past bills to the first 3 for display
+    limited_past_bills = past_bills[:3]
+
+    # Full list of past bills (for when the user clicks "View All")
+    all_past_bills = past_bills
+
+    return render(request, "bills.html", {
+        'bills': bills,
+        'current_bills': current_bills,
+        'limited_past_bills': limited_past_bills,
+        'all_past_bills': all_past_bills,
+    })
 
 @login_required
 def bill_create(request):
@@ -117,4 +165,23 @@ def bill_detail(request, bill_id):
         'bill_splits': bill_splits,
         'total_bill_with_tax_and_tip': total_bill_with_tax_and_tip,
         'tip_amount': round(tip_amount, 2),
+        'created_at': bill.created_at,
+    })
+
+@login_required
+def past_bills(request):
+    # Fetch all past bills created by the user where is_current is False
+    past_bills = Bill.objects.filter(created_by=request.user, is_current=False).order_by('-created_at')
+    past_bills_count = 0
+
+    # Calculate after tip and tax for each bill
+    for bill in past_bills:
+        tip_percentage_decimal = Decimal(bill.tip_percentage) / 100
+        after_tip_tax = (bill.total_amount * (1 + tip_percentage_decimal)) + bill.tax_amount
+        bill.after_tip_tax = round(after_tip_tax, 2)  
+        past_bills_count += 1
+
+    return render(request, 'past_bills.html', {
+        'past_bills': past_bills,
+        'past_bills_count': past_bills_count
     })

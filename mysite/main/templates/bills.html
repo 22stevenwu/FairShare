@@ -5,13 +5,13 @@
 
 <link rel="stylesheet" href="{% static 'styles/bills.css' %}">
 
-<div class="bills-page-wrapper">
+<div class="bills-box current-bills-box">
     <div class="bills-header">
         <h1 class="page-title">Current Bills</h1>
         <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
     </div>
 
-    <!-- Table for displaying bills -->
+    <!-- Current Bills -->
     <table class="bills-table">
         <thead>
             <tr>
@@ -20,18 +20,48 @@
             </tr>
         </thead>
         <tbody>
-            {% for bill in bills %}
+            {% for bill in current_bills %}
                 <tr class="bill-item">
                     <td><a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a></td>
-                    <td>${{ bill.total_owed}}</td>
+                    <td>${{ bill.total_owed }}</td>  <!-- Display total_owed for current bills -->
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="2" class="no-bills">No bills found.</td>
+                    <td colspan="2" class="no-bills">No current bills found.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+<!-- Past Bills -->
+<div class="bills-box past-bills-box">
+    <div class="bills-header">
+        <h1 class="page-title">Past Bills</h1>
+        <a href="{% url 'past_bills' %}" class="create-button">View All Past Bills</a>
+    </div>
+
+    <table class="bills-table">
+        <thead>
+            <tr>
+                <th>Bill Name</th>
+                <th>Amount Owed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in limited_past_bills %}
+                <tr class="bill-item">
+                    <td><a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a></td>
+                    <td>${{ bill.total_owed }}</td>  
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2" class="no-bills">No current bills found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
 
 {% endblock %}
