@@ -2,28 +2,36 @@
 {% load static %}
 
 {% block content %}
-<head>
-    <link rel="stylesheet" href="{% static 'styles/bills.css' %}">
-</head>
 
-<body>
-    <div class="bills-page-wrapper">
-        <div class="bills-header">
-            <h1 class="page-title">Past Bills</h1>
-            <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
-        </div>
+<link rel="stylesheet" href="{% static 'styles/bills.css' %}">
 
-        <div class="bills-list-container">
-            <ul class="bills-list">
-                {% for bill in bills %}
-                    <li class="bill-item">
-                        <a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a> ${{ bill.total_amount }}
-                    </li>
-                {% empty %}
-                    <li class="no-bills">No bills found.</li> 
-                {% endfor %}
-            </ul>
-        </div>
+<div class="bills-page-wrapper">
+    <div class="bills-header">
+        <h1 class="page-title">Current Bills</h1>
+        <a href="{% url 'bill_create' %}" class="create-button">Create Bill</a>
     </div>
-</body>
+
+    <!-- Table for displaying bills -->
+    <table class="bills-table">
+        <thead>
+            <tr>
+                <th>Bill Name</th>
+                <th>Amount Owed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+                <tr class="bill-item">
+                    <td><a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a></td>
+                    <td>${{ bill.total_owed}}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2" class="no-bills">No bills found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

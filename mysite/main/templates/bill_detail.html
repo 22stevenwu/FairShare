@@ -1,31 +1,49 @@
 {% extends 'base.html' %}
-{% block content %}
-    <h1>Bill Details</h1>
-    <h2>Bill Name: {{ bill.name }}</h2>
-    <p>Total Amount: ${{ bill.total_amount }}</p>
-    <p>Tip: ${{ bill.tip_percentage }}%</p>
-    <p>Tax: ${{ bill.tax_amount }}</p>
-    <p>Total Bill (with Tip and Tax): ${{ total_bill_with_tax_and_tip }}</p>
-    
-    <h3>Participants:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Participant Name</th>
-                <th>Amount Spent</th>
-                <th>Amount Owed</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for split in bill_splits %}
-                <tr>
-                    <td>{{ split.participant_name }}</td>
-                    <td>${{ split.amount_spent }}</td>
-                    <td>${{ split.amount_owed }}</td>  
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% load static %}
 
-    <a href="{% url 'bills' %}">Back to Bills</a>
+{% block content %}
+    <head>
+        <link rel="stylesheet" href="{% static 'styles/bill_detail.css' %}">
+    </head>
+
+    <h1 class="bill-title">{{bill.name}}</h1>
+
+    <div class="bill-info">
+        <p class="bill-amount"><span>Total Amount:</span> ${{ bill.total_amount }}</p>
+        <p class="bill-tip"><span>Tip:</span> ${{ tip_amount }} ({{ bill.tip_percentage }}%)</p>
+        <p class="bill-tax"><span>Tax:</span> ${{ bill.tax_amount }}</p>
+    
+        <p class="total-bill"><span>Total Bill (with Tip and Tax):</span> ${{ total_bill_with_tax_and_tip }}</p>
+    </div>
+    
+    <h3 class="participants-title">Participants:</h3>
+    
+    <form method="POST" class="bill-form">
+        {% csrf_token %}
+        <table class="bill-participants-table">
+            <thead>
+                <tr class="table-header">
+                    <th class="table-header-item">Participant Name</th>
+                    <th class="table-header-item">Amount Spent</th>
+                    <th class="table-header-item">Amount Owed</th>
+                    <th class="table-header-item">Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for split in bill_splits %}
+                    <tr class="bill-item">
+                        <td class="participant-name">{{ split.participant_name }}</td>
+                        <td class="amount-spent">${{ split.amount_spent }}</td>
+                        <td class="amount-owed">${{ split.amount_owed }}</td>
+                        <td class="paid-checkbox">
+                            <input type="checkbox" name="paid_{{ split.id }}" {% if split.paid %}checked{% endif %}>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="update-payment-button">Update Payments</button>
+    </form>
+    
+    <a href="{% url 'bills' %}" class="back-to-bills">Back to Bills</a>
 {% endblock %}

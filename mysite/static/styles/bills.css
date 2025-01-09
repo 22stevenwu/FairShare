@@ -1,19 +1,21 @@
 /* bills.css */
 
+/* Wrapper for the bills page */
 .bills-page-wrapper {
     max-width: 1200px;
-    margin: 40px auto;  
+    margin: 40px auto;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Header Section */
 .bills-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 2px solid #e0e0e0;
 }
@@ -25,7 +27,7 @@
 }
 
 .create-button {
-    background-color: #4CAF50;  
+    background-color: #4CAF50;
     color: #fff;
     text-decoration: none;
     padding: 12px 20px;
@@ -33,28 +35,53 @@
     font-weight: bold;
     border-radius: 8px;
     display: inline-block;
-    transition: color 0.3s ease, transform 0.3s ease; 
+    transition: color 0.3s ease, transform 0.3s ease;
     text-align: center;
 }
 
 .create-button:hover {
-    background-color: #45a049;  
+    background-color: #45a049;
     transform: scale(1.1);
 }
 
-/* Bills List Section */
-.bills-list-container {
-    margin-top: 20px;
+/* Table Styling */
+.bills-table {
+    width: 100%; /* Make the table span the entire width of the container */
+    border-collapse: collapse;
+    border: none;
 }
 
-/* Bills List */
-.bills-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+/* Header and Table Cells Styling */
+.bills-table th, .bills-table td {
+    padding: 12px;
+    text-align: left;
+    border: none;
+}
+
+.bills-table th {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Flex container for each table row */
+.bills-table tr {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    justify-content: space-between; /* Aligns the cells to opposite ends */
+}
+
+.bills-table td {
+    font-size: 18px;
+    flex: 1; /* Ensures the cells take up equal space */
+}
+
+.bills-table td:first-child {
+    text-align: left;
+    padding-right: 20px; /* Space between columns */
+}
+
+.bills-table td:last-child {
+    text-align: right;
 }
 
 /* Bill Item Styling */
@@ -62,11 +89,11 @@
     background-color: #fff;
     padding: 15px;
     margin: 10px 0;
-    width: 100%;  
-    box-sizing: border-box;  
+    width: 100%; /* Ensure bill items span the entire width */
+    box-sizing: border-box;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
+    font-size: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,7 +118,7 @@
 
 /* Empty State Message */
 .no-bills {
-    font-size: 18px;
+    font-size: 20px;
     color: #666;
     font-style: italic;
     text-align: center;

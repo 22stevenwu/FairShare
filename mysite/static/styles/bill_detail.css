@@ -1,0 +1,168 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Bill Detail Page Styling */
+.bill-detail-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header and Title */
+.bill-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Bill Information Section */
+.bill-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Center the Total Amount */
+.bill-amount {
+    grid-column: span 2;  
+    font-weight: bold;
+    margin:0;
+}
+
+.bill-info p {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+}
+
+.bill-info p span {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.bill-tip,
+.bill-tax {
+    display: inline-block;
+    width: 100%; 
+    margin: 0;
+}
+
+.total-bill {
+    grid-column: span 2;
+    font-weight: bold;
+    margin:0;
+}
+
+.participants-title {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.bill-participants-table {
+    width: 100%;
+    border-collapse: collapse;  
+    border-spacing: 0;  
+    margin-top: 20px;
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+    overflow: hidden; 
+}
+
+.table-header {
+    background-color: #4CAF50;
+    color: white;
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+}
+
+.table-header-item {
+    padding: 12px 15px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.bill-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+}
+
+.bill-item:hover {
+    background-color: #f1f1f1;
+}
+
+.bill-item td {
+    padding: 10px;
+    text-align: left;
+}
+
+.participant-name, .amount-spent, .amount-owed {
+    font-size: 18px;
+}
+
+.paid-checkbox input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* Button Styling */
+.update-payment-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.update-payment-button:hover {
+    background-color: #45a049;
+}
+
+/* Link Styling */
+.back-to-bills {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.back-to-bills:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .bill-participants-table, .table-header-item {
+        font-size: 14px;
+    }
+
+    .update-payment-button {
+        width: 100%;
+    }
+}

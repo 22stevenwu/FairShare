@@ -15,6 +15,30 @@ def logout_view(request):
 @login_required
 def bills_view(request):
     bills = Bill.objects.filter(created_by=request.user)
+
+    # Calculate the total amount with tax and tip for each bill
+    for bill in bills:
+        total_bill = Decimal(bill.total_amount)  # Make sure total_bill is a Decimal
+        tip_amount = (Decimal(bill.tip_percentage) / 100) * total_bill  # Convert to Decimal for tip calculation
+        tax_amount = Decimal(bill.tax_amount)  # Ensure tax_amount is a Decimal
+        total_bill_with_tax_and_tip = total_bill + tip_amount + tax_amount  # Add as Decimal
+
+        bill_splits = BillSplit.objects.filter(bill=bill)
+
+        total_owed = Decimal('0.00')  
+        for split in bill_splits:
+            if split.paid:
+                split.amount_owed = Decimal('0.00')  
+            else:
+                amount_owed = (split.amount_spent / total_bill) * total_bill_with_tax_and_tip
+                split.amount_owed = round(Decimal(amount_owed), 2)  
+            split.save()
+            total_owed += split.amount_owed 
+
+        bill.total_with_tax_and_tip = total_bill_with_tax_and_tip
+        bill.total_owed = total_owed
+        bill.save()
+
     return render(request, "bills.html", {'bills': bills})
 
 @login_required
@@ -48,10 +72,7 @@ def bill_create(request):
 
             # Calculate how much each participant owes based on their share
             for participant_name, amount_spent in participants:
-                # Calculate each person's share of the total bill
                 participant_share = (amount_spent / total_bill) * total_bill_with_tax_and_tip
-
-                # Create an entry for each participant
                 BillSplit.objects.create(
                     bill=bill,
                     participant_name=participant_name,  
@@ -69,24 +90,31 @@ def bill_create(request):
 @login_required
 def bill_detail(request, bill_id):
     bill = get_object_or_404(Bill, id=bill_id)
-
     bill_splits = BillSplit.objects.filter(bill=bill)
 
-    # Calculate the total bill (with tip and tax)
+    if request.method == 'POST':
+        for split in bill_splits:
+            paid_checkbox_name = f"paid_{split.id}"
+            if paid_checkbox_name in request.POST:
+                split.paid = True  
+            else:
+                split.paid = False 
+            split.save()
+        return redirect('bills')
+
     total_bill = Decimal(bill.total_amount)
     tip_amount = (Decimal(bill.tip_percentage) / 100) * total_bill
     tax_amount = Decimal(bill.tax_amount)
     total_bill_with_tax_and_tip = round((total_bill + tip_amount + tax_amount), 2)
 
-    # Calculate amount owed for each participant based on their proportion of the total spent
+    total_spent = sum([split.amount_spent for split in bill_splits])
     for split in bill_splits:
-        # Calculate how much each participant owes based on their share of the total bill
-        amount_owed = (split.amount_spent / total_bill) * total_bill_with_tax_and_tip
+        amount_owed = (split.amount_spent / total_spent) * total_bill_with_tax_and_tip
         split.amount_owed = round(amount_owed, 2)
-        split.save() 
 
     return render(request, 'bill_detail.html', {
         'bill': bill,
         'bill_splits': bill_splits,
         'total_bill_with_tax_and_tip': total_bill_with_tax_and_tip,
+        'tip_amount': round(tip_amount, 2),
     })
