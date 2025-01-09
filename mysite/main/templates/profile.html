@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
-<body>
-    <h2>Profile</h2>
-    {% if user.is_authenticated %}
-        <p><strong>Name:</strong> {{ user.get_full_name }}</p>  <!-- Full name -->
-        <p><strong>Email:</strong> {{ user.email }}</p>  <!-- Email -->
-        <p><strong>Number of Bills Created:</strong> {{ num_bills }}</p>  <!-- Number of bills created -->
-        <p><strong>Total Amount Owed:</strong> ${{ total_owed }}</p>  <!-- Total amount owed -->
 
-        <a href="{% url 'logout' %}">Logout</a>
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+
+<div class="profile-container">
+    <h1 class="profile-title">Hello, {{user.get_full_name}}!</h2>
+
+    {% if user.is_authenticated %}
+        <div class="profile-info">
+            <p><strong>Email:</strong> {{ user.email }}</p> 
+            <p><strong>Number of Bills Created:</strong> {{ num_bills }}</p> 
+            <p><strong>Total Amount Owed:</strong> ${{ total_owed }}</p> 
+            <p><strong>Account Created On:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+        </div>
     {% else %}
         <p>You are not logged in.</p>
-        <a href="{% url 'social:begin' 'google-oauth2' %}?next=/">Sign In With Google</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next=/" class="login-button">Sign In With Google</a>
     {% endif %}
-</body>
+</div>
 {% endblock %}
