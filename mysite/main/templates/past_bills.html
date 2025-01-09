@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'styles/past_bills.css' %}">
+
+<div class="bills-box past-bills-box">
+    <div class="bills-header">
+        <h1 class="page-title">Past Bills ({{ past_bills_count }})</h1>
+        <a href="{% url 'bills' %}" class="create-button">Back to Bills</a>
+    </div>
+
+    <!-- Display limited past bills (first 3) -->
+    <table class="bills-table">
+        <thead>
+            <tr>
+                <th>Bill Name</th>
+                <th>Bill Total</th>
+                <th>Date Created</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in past_bills %}
+                <tr class="bill-item">
+                    <td><a href="{% url 'bill_detail' bill.id %}" class="bill-link">{{ bill.name }}</a></td>
+                    <td>${{ bill.after_tip_tax }}</td>  <!-- Display the total_owed for this bill -->
+                    <td>{{ bill.created_at|date:"F j, Y" }}</td>  <!-- Format the created_at field -->
+                    <td>
+                        <a href="{% url 'bill_detail' bill.id %}" class="view-detail-button">View Details</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" class="no-bills">No past bills found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

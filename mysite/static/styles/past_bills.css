@@ -1,6 +1,3 @@
-/* bills.css */
-
-/* Wrapper for the bills page */
 .bills-box {
     max-width: 1200px;
     margin: 10px auto;
@@ -50,15 +47,14 @@
 
 /* Table Styling */
 .bills-table {
-    width: 100%; /* Make the table span the entire width of the container */
+    width: 100%; 
     border-collapse: collapse;
     border: none;
 }
 
-/* Header and Table Cells Styling */
 .bills-table th, .bills-table td {
     padding: 12px;
-    text-align: left;
+    text-align: left; 
     border: none;
 }
 
@@ -68,39 +64,34 @@
     font-weight: bold;
 }
 
-/* Flex container for each table row */
-.bills-table tr {
-    display: flex;
-    justify-content: space-between; /* Aligns the cells to opposite ends */
-}
 
 .bills-table td {
     font-size: 18px;
-    flex: 1; /* Ensures the cells take up equal space */
+
 }
 
 .bills-table td:first-child {
     text-align: left;
-    padding-right: 20px; /* Space between columns */
+    padding-right: 20px; 
 }
 
 .bills-table td:last-child {
     text-align: right;
 }
 
+.bills-table th:last-child {
+    text-align: right;
+}
+
 /* Bill Item Styling */
 .bill-item {
     background-color: #fff;
-    padding: 15px;
     margin: 10px 0;
-    width: 100%; /* Ensure bill items span the entire width */
+    width: 100%; 
     box-sizing: border-box;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-size: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -109,7 +100,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Link Styling */
 .bill-link {
     color: #333;
     text-decoration: none;
@@ -128,6 +118,6 @@
     text-align: center;
     padding: 20px;
     display: flex;
-    justify-content: center; /* Horizontally center the content */
-    align-items: center; /* Vertically center the content */
+    justify-content: center;
+    align-items: center; 
 }

@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{% static 'styles/bill_detail.css' %}">
     </head>
 
-    <h1 class="bill-title">{{bill.name}}</h1>
+    <h1 class="bill-title">{{bill.name}} ({{ bill.created_at|date:"m/d/Y" }})</h1>
 
     <div class="bill-info">
         <p class="bill-amount"><span>Total Amount:</span> ${{ bill.total_amount }}</p>

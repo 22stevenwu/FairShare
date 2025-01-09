@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+    <div class="user-auth">
+        <h2>Hi, {{ user.get_full_name }}</h2>
+        <p>Email: {{ user.email }}</p>
+        <p><a href="{% url 'logout' %}" class="btn-logout">Logout</a></p>
+    </div>
+    {% else %}
+    <div class="user-not-auth">
+        <h2>You are not logged in</h2>
+        <p><a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-login">Sign In with Google</a></p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
