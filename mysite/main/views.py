@@ -11,14 +11,11 @@ def login_view(request):
 
 @login_required
 def profile(request):
-    user = request.user  # Get the logged-in user
-    # Get the number of bills created by the user
+    user = request.user  
     num_bills = Bill.objects.filter(created_by=user).count()
 
-    # Get the total amount owed by the user
     total_owed = BillSplit.objects.filter(bill__created_by=user, paid=False).aggregate(Sum('amount_owed'))['amount_owed__sum']
 
-    # Default to 0 if no amount is owed (in case the sum is None)
     total_owed = total_owed if total_owed is not None else 0
 
     context = {
@@ -42,10 +39,10 @@ def bills_view(request):
 
     # Calculate the total amount with tax and tip for each bill
     for bill in bills:
-        total_bill = Decimal(bill.total_amount)  # Make sure total_bill is a Decimal
-        tip_amount = (Decimal(bill.tip_percentage) / 100) * total_bill  # Convert to Decimal for tip calculation
-        tax_amount = Decimal(bill.tax_amount)  # Ensure tax_amount is a Decimal
-        total_bill_with_tax_and_tip = total_bill + tip_amount + tax_amount  # Add as Decimal
+        total_bill = Decimal(bill.total_amount)  
+        tip_amount = (Decimal(bill.tip_percentage) / 100) * total_bill  
+        tax_amount = Decimal(bill.tax_amount)  
+        total_bill_with_tax_and_tip = total_bill + tip_amount + tax_amount  
 
         bill_splits = BillSplit.objects.filter(bill=bill)
 
@@ -59,27 +56,21 @@ def bills_view(request):
             split.save()
             total_owed += split.amount_owed
 
-        # If total_owed is 0, mark the bill as past (is_current = False)
         if total_owed == 0:
-            bill.is_current = False  # Set the bill to past
+            bill.is_current = False  
         else:
-            bill.is_current = True  # Otherwise, it is still current
+            bill.is_current = True 
 
-        # Save the calculated total_owed to the bill instance in the database
         bill.total_with_tax_and_tip = total_bill_with_tax_and_tip
-        bill.total_owed = total_owed  # Save the total_owed
+        bill.total_owed = total_owed  
         bill.save()
 
-    # Fetch current bills (where is_current is True)
     current_bills = Bill.objects.filter(created_by=request.user, is_current=True)
 
-    # Fetch past bills (where is_current is False)
     past_bills = Bill.objects.filter(created_by=request.user, is_current=False)
 
-    # Limit the past bills to the first 3 for display
     limited_past_bills = past_bills[:3]
 
-    # Full list of past bills (for when the user clicks "View All")
     all_past_bills = past_bills
 
     return render(request, "bills.html", {

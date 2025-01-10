@@ -6,7 +6,7 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;  /* Ensures the padding is included in the width */
+    box-sizing: border-box; 
 }
 
 /* Title */
@@ -37,13 +37,13 @@ input[type="text"], input[type="number"] {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
-    box-sizing: border-box;  /* Ensures padding is included in width */
+    box-sizing: border-box;  
 }
 
 /* Focus effect on input fields */
 input[type="number"]:focus, input[type="text"]:focus {
     outline: none;
-    border-color: #4CAF50;  /* Green border on focus */
+    border-color: #4CAF50;  
 }
 
 /* Submit button styling */
@@ -52,7 +52,7 @@ button[type="submit"] {
     padding: 12px;
     font-size: 16px;
     color: #fff;
-    background-color: #4CAF50;  /* Green */
+    background-color: #4CAF50;  
     border: none;
     border-radius: 5px;
     cursor: pointer;
