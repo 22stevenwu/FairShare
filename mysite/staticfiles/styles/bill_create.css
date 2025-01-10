@@ -1,0 +1,141 @@
+/* Form container */
+.create-bill-form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; 
+}
+
+/* Title */
+.page-title {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* Label Styling */
+label {
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Input field styling */
+input[type="text"], input[type="number"] {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;  
+}
+
+/* Focus effect on input fields */
+input[type="number"]:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #4CAF50;  
+}
+
+/* Submit button styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4CAF50;  
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Back to Bills Link */
+.back-to-bills-link {
+    display: inline-block;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 24px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-left: 30px;
+}
+
+.back-to-bills-link:hover {
+    color: #45a049;
+}
+
+.user-entry {
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 15px; 
+    gap: 20px; 
+}
+
+.participant-name,
+.amount-spent {
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+}
+
+.user-entry label {
+    flex-basis: 95%;
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.user-entry input[name^="name_"] {
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.user-entry input[name^="amount_spent_"] {
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .create-bill-form {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    input[type="text"], input[type="number"] {
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+    }
+}
